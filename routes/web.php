@@ -15,7 +15,7 @@ Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('a
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
 
 // Protected routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\CheckDomainRestriction::class])->group(function () {
     Route::get('/dashboard', [FlashcardController::class, 'dashboard'])->name('dashboard');
     Route::post('/flashcards', [FlashcardController::class, 'store'])->name('flashcards.store');
     Route::delete('/flashcards/{flashcard}', [FlashcardController::class, 'destroy'])->name('flashcards.destroy');
